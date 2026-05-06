@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <!-- ===== 기본 문서 정보 ===== -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO 메타 태그 -->
+  <meta name="description" content="안녕하세요. ooo의 개인 홈페이지입니다. 개발자이자 창작자로서의 여정을 소개합니다." />
+  <meta name="keywords"    content="개발자, 포트폴리오, ooo, 프론트엔드, 개인홈페이지" />
+  <meta name="author"      content="ooo" />
+  <meta name="robots"      content="index, follow" />
+
+  <!-- Open Graph (카카오/슬랙/SNS 공유 미리보기) -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:title"       content="ooo | 개인 홈페이지" />
+  <meta property="og:description" content="안녕하세요. ooo의 개인 공간입니다." />
+  <meta property="og:locale"      content="ko_KR" />
+
+  <!-- 파비콘 (별도 파일 없이 SVG 인라인) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" />
+
+  <!-- 한국어 폰트: display=swap 으로 FOUT 최소화 (배포 성능 고려) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+
+  <title>ooo | 개인 홈페이지</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- =====================================================
+       네비게이션 바 — 스크롤 시 배경 추가 (JS 제어)
+       ===================================================== -->
+  <nav class="navbar" id="navbar" aria-label="메인 내비게이션">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo" aria-label="홈으로">ooo</a>
+
+      <!-- 모바일 햄버거 버튼 -->
+      <button class="hamburger" id="hamburger"
+        aria-label="메뉴 열기" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav-menu" id="nav-menu" role="list">
+        <li><a href="#about"     class="nav-link">소개</a></li>
+        <li><a href="#portfolio" class="nav-link">포트폴리오</a></li>
+        <li><a href="#interests" class="nav-link">관심사</a></li>
+        <li><a href="#contact"   class="nav-link">연락처</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <!-- =====================================================
+         히어로 섹션 — 이름 + 타이핑 애니메이션 + CTA
+         doc 인사이트: 타이핑 역할은 2-3개로 제한 (정보 전달 속도 저하 방지)
+         ===================================================== -->
+    <section class="hero" id="hero" aria-label="소개 인트로">
+
+      <!-- 배경 장식 (aria-hidden: 순수 시각 효과) -->
+      <div class="hero-blobs" aria-hidden="true">
+        <div class="blob blob-a"></div>
+        <div class="blob blob-b"></div>
+        <div class="blob blob-c"></div>
+      </div>
+
+      <div class="hero-content">
+        <!-- 현재 상태 배지 (doc: 실시간 업데이트 필요성 강조) -->
+        <div class="status-badge fade-up" id="status-badge">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>협업 가능</span>
+        </div>
+
+        <p class="hero-greeting fade-up">안녕하세요 👋</p>
+
+        <h1 class="hero-name fade-up">
+          저는 <span class="name-highlight">ooo</span> 입니다
+        </h1>
+
+        <!-- 타이핑 애니메이션 (JS가 roles 배열을 순환) -->
+        <p class="hero-tagline fade-up">
+          <span class="typing-prefix">저는 </span>
+          <span class="typing-text" id="typing-text" aria-live="polite"></span>
+          <span class="typing-cursor" aria-hidden="true">|</span>
+          <span class="typing-suffix"> 입니다</span>
+        </p>
+
+        <!-- 자기소개 한 줄 -->
+        <p class="hero-intro fade-up">안녕하세요.</p>
+
+        <div class="hero-cta fade-up">
+          <a href="#portfolio" class="btn btn-primary">포트폴리오 보기</a>
+          <a href="#contact"   class="btn btn-ghost">연락하기</a>
+        </div>
+      </div>
+
+      <!-- 스크롤 유도 화살표 -->
+      <a href="#about" class="scroll-arrow" aria-label="아래로 스크롤">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+      </a>
+    </section>
+
+    <!-- =====================================================
+         자기소개 섹션 — 프로필 + 기술스택 + 타임라인
+         doc 인사이트:
+           - 기술 숙련도 %는 기준 불명확 → 태그/연차 방식으로 표현
+           - 커리어 타임라인으로 여정을 시각적으로 전달
+         ===================================================== -->
+    <section class="about section" id="about" aria-labelledby="about-title">
+      <div class="container">
+
+        <header class="section-header">
+          <h2 class="section-title reveal" id="about-title">
+            <span class="sec-num">01</span> 자기소개
+          </h2>
+        </header>
+
+        <!-- 상단: 프로필 카드 + 소개 텍스트 -->
+        <div class="about-top">
+
+          <!-- 프로필 카드 -->
+          <div class="profile-card reveal">
+            <div class="avatar-wrap" aria-hidden="true">
+              <!-- 프로필 사진이 있을 경우 img 태그로 교체:
+                   <img src="assets/profile.webp" alt="ooo 프로필 사진" width="120" height="120" /> -->
+              <svg class="avatar-svg" viewBox="0 0 120 120">
+                <defs>
+                  <linearGradient id="avatarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%"   stop-color="#6366f1"/>
+                    <stop offset="100%" stop-color="#a855f7"/>
+                  </linearGradient>
+                </defs>
+                <circle cx="60" cy="44" r="26" fill="url(#avatarGrad)" opacity=".9"/>
+                <ellipse cx="60" cy="110" rx="40" ry="28" fill="url(#avatarGrad)" opacity=".7"/>
+              </svg>
+            </div>
+            <strong class="profile-name">ooo</strong>
+            <span class="profile-role">Developer · Creator</span>
+            <div class="profile-tags">
+              <span class="ptag">🇰🇷 Seoul</span>
+              <span class="ptag">💼 협업 가능</span>
+            </div>
+          </div>
+
+          <!-- 소개 텍스트 + 기술 스택 -->
+          <div class="about-body reveal">
+            <p>
+              안녕하세요. 사용자 경험을 최우선으로 생각하는 개발자 <strong>ooo</strong>입니다.
+              깔끔한 코드와 직관적인 인터페이스를 통해 사람들의 일상을 더 편리하게 만드는 것을 목표로 합니다.
+            </p>
+            <p>
+              새로운 기술을 배우고 오픈소스 커뮤니티에 기여하며,
+              아이디어를 실제 서비스로 구현하는 과정에서 보람을 느낍니다.
+            </p>
+
+            <!-- 기술 스택 태그 (doc: % 숙련도 대신 태그/연차 표현 권장) -->
+            <div class="tech-section">
+              <h3 class="tech-label">기술 스택</h3>
+              <div class="tech-tags">
+                <span class="tech" data-level="주력">HTML / CSS</span>
+                <span class="tech" data-level="주력">JavaScript</span>
+                <span class="tech" data-level="주력">React</span>
+                <span class="tech" data-level="활용">Node.js</span>
+                <span class="tech" data-level="활용">Python</span>
+                <span class="tech" data-level="활용">Git / GitHub</span>
+                <span class="tech" data-level="학습중">TypeScript</span>
+                <span class="tech" data-level="학습중">Next.js</span>
+              </div>
+              <div class="tech-legend">
+                <span><span class="legend-dot primary"></span>주력</span>
+                <span><span class="legend-dot secondary"></span>활용</span>
+                <span><span class="legend-dot muted"></span>학습중</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 커리어 타임라인 (doc: 이력서보다 시각적으로 직관적) -->
+        <div class="timeline-section reveal">
+          <h3 class="timeline-label">커리어 여정</h3>
+          <ol class="timeline" aria-label="커리어 타임라인">
+
+            <li class="tl-item">
+              <div class="tl-dot" aria-hidden="true"></div>
+              <div class="tl-content">
+                <span class="tl-date">2026 —</span>
+                <strong class="tl-title">개인 프로젝트 & 오픈소스 기여</strong>
+                <p class="tl-desc">사이드 프로젝트를 통해 풀스택 경험 확장 중</p>
+              </div>
+            </li>
+
+            <li class="tl-item">
+              <div class="tl-dot" aria-hidden="true"></div>
+              <div class="tl-content">
+                <span class="tl-date">2025</span>
+                <strong class="tl-title">프론트엔드 개발 본격 시작</strong>
+                <p class="tl-desc">React 생태계 학습 및 실무 프로젝트 참여</p>
+              </div>
+            </li>
+
+            <li class="tl-item">
+              <div class="tl-dot" aria-hidden="true"></div>
+              <div class="tl-content">
+                <span class="tl-date">2024</span>
+                <strong class="tl-title">웹 개발 입문</strong>
+                <p class="tl-desc">HTML / CSS / JavaScript 기초부터 학습 시작</p>
+              </div>
+            </li>
+
+          </ol>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =====================================================
+         포트폴리오 섹션 — 프로젝트 쇼케이스
+         doc 인사이트:
+           - 양보다 질: 잘 된 프로젝트 5개가 20개 나열보다 낫다
+           - 기술 스택별 필터링 제공
+           - 이미지 lazy loading 필수 (이탈률 직결)
+         ===================================================== -->
+    <section class="portfolio section section-alt" id="portfolio" aria-labelledby="portfolio-title">
+      <div class="container">
+
+        <header class="section-header">
+          <h2 class="section-title reveal" id="portfolio-title">
+            <span class="sec-num">02</span> 포트폴리오
+          </h2>
+          <p class="section-sub reveal">직접 만든 프로젝트들입니다.</p>
+        </header>
+
+        <!-- 필터 버튼 (기술 스택별) -->
+        <div class="filter-bar reveal" role="group" aria-label="프로젝트 필터">
+          <button class="filter-btn active" data-filter="all">전체</button>
+          <button class="filter-btn" data-filter="web">웹 개발</button>
+          <button class="filter-btn" data-filter="ai">AI / 자동화</button>
+          <button class="filter-btn" data-filter="tool">도구 / 유틸</button>
+        </div>
+
+        <!-- 프로젝트 카드 그리드 -->
+        <div class="projects-grid" id="projects-grid">
+
+          <article class="project-card reveal" data-category="web tool" tabindex="0">
+            <!-- 썸네일 (doc: WebP + lazy loading 권장) -->
+            <div class="project-thumb" aria-hidden="true">
+              <span class="thumb-emoji">✅</span>
+            </div>
+            <div class="project-body">
+              <div class="project-meta">
+                <span class="proj-cat">도구 / 유틸</span>
+                <span class="proj-year">2026</span>
+              </div>
+              <h3 class="project-title">Todo 앱</h3>
+              <p class="project-desc">
+                로컬스토리지 기반 할일 관리 앱. 카테고리별 분류와 완료율 통계 기능을 포함합니다.
+              </p>
+              <div class="project-stack">
+                <span>HTML</span><span>CSS</span><span>JavaScript</span>
+              </div>
+              <div class="project-links">
+                <a href="#" class="proj-link" aria-label="Todo 앱 데모 보기" target="_blank" rel="noopener">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                    <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+                  </svg>
+                  데모
+                </a>
+                <a href="#" class="proj-link" aria-label="Todo 앱 GitHub 보기" target="_blank" rel="noopener">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+                  </svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-category="web" tabindex="0">
+            <div class="project-thumb" aria-hidden="true">
+              <span class="thumb-emoji">🛍️</span>
+            </div>
+            <div class="project-body">
+              <div class="project-meta">
+                <span class="proj-cat">웹 개발</span>
+                <span class="proj-year">2025</span>
+              </div>
+              <h3 class="project-title">쇼핑몰 랜딩 페이지</h3>
+              <p class="project-desc">
+                반응형 쇼핑몰 랜딩 페이지. 상품 필터링, 장바구니 기능, 다크모드 지원.
+              </p>
+              <div class="project-stack">
+                <span>React</span><span>CSS Modules</span>
+              </div>
+              <div class="project-links">
+                <a href="#" class="proj-link" target="_blank" rel="noopener">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                    <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+                  </svg>
+                  데모
+                </a>
+                <a href="#" class="proj-link" target="_blank" rel="noopener">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+                  </svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-category="ai" tabindex="0">
+            <div class="project-thumb" aria-hidden="true">
+              <span class="thumb-emoji">🤖</span>
+            </div>
+            <div class="project-body">
+              <div class="project-meta">
+                <span class="proj-cat">AI / 자동화</span>
+                <span class="proj-year">2025</span>
+              </div>
+              <h3 class="project-title">AI 요약 봇</h3>
+              <p class="project-desc">
+                뉴스 기사를 자동으로 3줄 요약해주는 Python 스크립트. OpenAI API 활용.
+              </p>
+              <div class="project-stack">
+                <span>Python</span><span>OpenAI API</span>
+              </div>
+              <div class="project-links">
+                <a href="#" class="proj-link" target="_blank" rel="noopener">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+                  </svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         관심사 섹션
+         ===================================================== -->
+    <section class="interests section" id="interests" aria-labelledby="interests-title">
+      <div class="container">
+
+        <header class="section-header">
+          <h2 class="section-title reveal" id="interests-title">
+            <span class="sec-num">03</span> 관심사
+          </h2>
+          <p class="section-sub reveal">제가 열정을 쏟는 분야들입니다.</p>
+        </header>
+
+        <div class="interests-grid">
+
+          <article class="interest-card reveal" tabindex="0">
+            <div class="i-icon" aria-hidden="true">💻</div>
+            <h3>웹 개발</h3>
+            <p>모던 웹 기술로 빠르고 접근성 높은 서비스를 만드는 것을 즐깁니다. 성능 최적화와 좋은 UX에 특히 관심이 많습니다.</p>
+          </article>
+
+          <article class="interest-card reveal" tabindex="0">
+            <div class="i-icon" aria-hidden="true">🤖</div>
+            <h3>인공지능 / AI</h3>
+            <p>LLM과 머신러닝을 활용한 서비스 개발에 관심을 갖고 있습니다. AI가 일상을 어떻게 바꿀지 탐구하는 중입니다.</p>
+          </article>
+
+          <article class="interest-card reveal" tabindex="0">
+            <div class="i-icon" aria-hidden="true">📚</div>
+            <h3>독서 & 학습</h3>
+            <p>기술 서적부터 인문학까지 폭넓게 읽습니다. 꾸준한 배움이 더 나은 개발자를 만든다고 믿습니다.</p>
+          </article>
+
+          <article class="interest-card reveal" tabindex="0">
+            <div class="i-icon" aria-hidden="true">🎨</div>
+            <h3>디자인 & UX</h3>
+            <p>좋은 디자인은 보기 좋을 뿐 아니라 직관적이어야 합니다. Figma와 사용자 리서치를 즐깁니다.</p>
+          </article>
+
+          <article class="interest-card reveal" tabindex="0">
+            <div class="i-icon" aria-hidden="true">🌏</div>
+            <h3>오픈소스</h3>
+            <p>커뮤니티의 힘으로 더 좋은 소프트웨어를 만드는 문화를 좋아합니다. 작은 PR부터 꾸준히 기여합니다.</p>
+          </article>
+
+          <article class="interest-card reveal" tabindex="0">
+            <div class="i-icon" aria-hidden="true">✈️</div>
+            <h3>여행 & 문화</h3>
+            <p>새로운 장소와 다양한 문화를 경험하는 것이 창의성과 시야를 넓혀준다고 생각합니다.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         연락처 섹션
+         doc 인사이트:
+           - 서버 없이 이메일: EmailJS / Formspree (무료 플랜 월 200건)
+           - 스팸 방지: honeypot 필드 (숨겨진 필드를 봇이 채우면 차단)
+           - reCAPTCHA보다 UX 친화적
+           - 응답 시간 안내 추가
+         ===================================================== -->
+    <section class="contact section section-alt" id="contact" aria-labelledby="contact-title">
+      <div class="container">
+
+        <header class="section-header">
+          <h2 class="section-title reveal" id="contact-title">
+            <span class="sec-num">04</span> 연락처
+          </h2>
+          <p class="section-sub reveal">
+            함께 이야기 나눠요. 보통 <strong>24시간 내</strong> 답변드립니다. 😊
+          </p>
+        </header>
+
+        <div class="contact-grid">
+
+          <!-- 연락처 정보 카드 -->
+          <div class="contact-info reveal">
+            <h3>연락 방법</h3>
+
+            <!-- 전화번호 -->
+            <a href="tel:010-0000-0000" class="cinfo-item" aria-label="전화 걸기">
+              <span class="cinfo-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.13 6.13l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+              </span>
+              <span>
+                <strong>전화</strong>
+                <small>010-0000-0000</small>
+              </span>
+            </a>
+
+            <!-- 이메일 -->
+            <a href="mailto:ooo@email.com" class="cinfo-item" aria-label="이메일 보내기">
+              <span class="cinfo-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="4" width="20" height="16" rx="2"/>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                </svg>
+              </span>
+              <span>
+                <strong>이메일</strong>
+                <small>ooo@email.com</small>
+              </span>
+            </a>
+
+            <!-- GitHub -->
+            <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="cinfo-item">
+              <span class="cinfo-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+                </svg>
+              </span>
+              <span>
+                <strong>GitHub</strong>
+                <small>github.com/ooo</small>
+              </span>
+            </a>
+          </div>
+
+          <!-- 메시지 폼 (doc: honeypot 스팸 방지) -->
+          <form class="contact-form reveal" id="contact-form" novalidate aria-label="메시지 전송 폼">
+            <h3>메시지 보내기</h3>
+
+            <!-- ※ honeypot 필드: 봇만 채우는 숨겨진 필드 (CSS로 숨김, JS에서 검사) -->
+            <div class="hp-field" aria-hidden="true">
+              <label for="hp-name">이름을 입력하지 마세요</label>
+              <input type="text" id="hp-name" name="hp_name" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <div class="form-row">
+              <div class="form-col">
+                <label for="f-name">이름 <span class="req" aria-hidden="true">*</span></label>
+                <input type="text"  id="f-name"  name="name"    placeholder="홍길동"             required autocomplete="name" />
+                <span class="f-err" id="err-name" role="alert" aria-live="polite"></span>
+              </div>
+              <div class="form-col">
+                <label for="f-email">이메일 <span class="req" aria-hidden="true">*</span></label>
+                <input type="email" id="f-email" name="email"   placeholder="you@email.com"     required autocomplete="email" />
+                <span class="f-err" id="err-email" role="alert" aria-live="polite"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="f-subject">제목</label>
+              <input type="text" id="f-subject" name="subject" placeholder="협업 제안 / 문의 / 인사 등" />
+            </div>
+
+            <div class="form-group">
+              <label for="f-msg">메시지 <span class="req" aria-hidden="true">*</span></label>
+              <textarea id="f-msg" name="message" rows="5"
+                placeholder="안녕하세요! 협업 관련해서 연락드립니다..." required></textarea>
+              <span class="f-err" id="err-msg" role="alert" aria-live="polite"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full" id="submit-btn">
+              <span class="btn-label">메시지 전송 →</span>
+              <span class="btn-spin" aria-hidden="true"></span>
+            </button>
+
+            <!-- 전송 성공 피드백 -->
+            <div class="form-ok" id="form-ok" hidden role="status" aria-live="polite">
+              ✅ 메시지가 전송되었습니다! 곧 연락드리겠습니다.
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== 푸터 ===== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <p>© <span id="footer-year"></span> ooo · 직접 만든 개인 홈페이지</p>
+      <p class="footer-sub">Built with HTML · CSS · Vanilla JS</p>
+    </div>
+  </footer>
+
+  <!-- 스크립트는 body 끝에 — 렌더링 블로킹 없음 -->
+  <script src="app.js" defer></script>
+</body>
+</html>
