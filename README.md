@@ -1,6 +1,10 @@
-# 개인 홈페이지
+# 🌱 ooo | 개인 홈페이지
 
 HTML, CSS, JavaScript로 만든 정적 개인 홈페이지 프로젝트입니다.
+
+## 🔗 배포 링크
+
+**[https://myhomepage-amber-six.vercel.app/](https://myhomepage-amber-six.vercel.app/)**
 
 ## 프로젝트 구성
 
